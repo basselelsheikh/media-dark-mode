@@ -1,0 +1,12 @@
+body {
+    width: 130px;
+    margin: 0;
+    padding: 10px;
+    background-color: black;
+    color: bisque;
+}
+
+#videosCheckbox,
+#imagesCheckbox {
+    accent-color: bisque;
+}
