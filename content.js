@@ -1,10 +1,10 @@
 chrome.runtime.onMessage.addListener(
     function (request) {
         if (request.videosDarkMode) {
-            invertVideos();
+            invertVideo();
         }
         if (request.videosDarkMode === false) {
-            resetVideos();
+            resetVideo();
         }
         if (request.imagesDarkMode) {
             invertImages();
@@ -12,32 +12,55 @@ chrome.runtime.onMessage.addListener(
         if (request.imagesDarkMode === false) {
             resetImages();
         }
+        if(request.enabled) {
+            handleVideo();
+            handleImages();
+        }
+        if(request.enabled === false) {
+            resetImages();
+            resetVideo();
+        }
     }
 );
 
-const mutationObserver = new MutationObserver((() => {
-    if (document.querySelector("video")) {
-        chrome.storage.sync.get('videosCheckbox', function (data) {
-            if (data.videosCheckbox) {
-                invertVideos();
-            }
-        });
+chrome.storage.sync.get('enabled', function (data) {
+    if(data.enabled) {
+        observeChanges();
     }
-    if (document.querySelector("img")) {
-        chrome.storage.sync.get('imagesCheckbox', function (data) {
-            if (data.imagesCheckbox) {
-                invertImages();
-            }
-        });
-    }
-}));
-
-mutationObserver.observe(document.body, {
-    childList: true,
-    subtree: true
 });
 
-function invertVideos() {
+function observeChanges() {
+    const mutationObserver = new MutationObserver((() => {
+        if (document.querySelector("video")) {
+            handleVideo();
+        }
+        if (document.querySelector("img")) {
+            handleImages();
+        }
+    }));
+    
+    mutationObserver.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
+}
+
+function handleVideo() {
+    chrome.storage.sync.get('videosCheckbox', function (data) {
+        if (data.videosCheckbox) {
+            invertVideo();
+        }
+    });
+}
+
+function handleImages() {
+    chrome.storage.sync.get('imagesCheckbox', function (data) {
+        if (data.imagesCheckbox) {
+            invertImages();
+        }
+    });
+}
+function invertVideo() {
     var video = document.querySelector("video");
     video.style.filter = "invert(1)";
 }
@@ -48,12 +71,9 @@ function invertImages() {
         img.style.filter = "invert(1)";
     }
 }
-function resetVideos() {
-    var videos = document.getElementsByTagName("video");
-    for (let i = 0; i < videos.length; i++) {
-        const video = videos[i];
+function resetVideo() {
+        var video = document.querySelector("video");
         video.style.filter = "none";
-    }
 }
 function resetImages() {
     var images = document.getElementsByTagName("img");
@@ -62,4 +82,3 @@ function resetImages() {
         img.style.filter = "none";
     }
 }
-
