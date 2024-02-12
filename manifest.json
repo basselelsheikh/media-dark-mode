@@ -1,7 +1,7 @@
 {
-    "name": "Media Dark Mode",
-    "version": "1.0",
-    "description": "Transforms images and videos into dark mode. Suitable for courses and learning materials.",
+    "name": "Videos/Images Dark Mode",
+    "version": "1.0.0",
+    "description": "Inverts videos and images. Most suitable for courses and learning materials that contain text that cannot be converted by other extensions.",
     "manifest_version": 3,
     "permissions": [
         "activeTab",
@@ -9,10 +9,12 @@
     ],
     "action": {
         "default_popup": "popup.html",
-        "default_title": "MediaDarkMode"
+        "default_title": "Videos/Images Dark Mode"
     },
     "icons": {
-        "48": "icon.png"
+        "16": "icons/icon16.png",
+        "48": "icons/icon48.png",
+        "128": "icons/icon128.png"
     },
     "content_scripts": [
         {
