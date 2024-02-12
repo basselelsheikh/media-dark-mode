@@ -1,7 +1,7 @@
 {
     "name": "Videos/Images Dark Mode",
     "version": "1.0.0",
-    "description": "Inverts videos and images. Most suitable for courses and learning materials that contain text that cannot be converted by other extensions.",
+    "description": "Inverts videos and images. Suitable for learning materials that contain text that cannot be converted by other extensions.",
     "manifest_version": 3,
     "permissions": [
         "activeTab",
