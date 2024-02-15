@@ -31,7 +31,7 @@ chrome.storage.sync.get('enabled', function (data) {
 
 function observeChanges() {
     const mutationObserver = new MutationObserver((() => {
-        if (document.querySelector("video")) {
+        if (document.querySelector("video, iframe")) {
             handleVideo();
         }
         if (document.querySelector("img")) {
@@ -61,9 +61,13 @@ function handleImages() {
     });
 }
 function invertVideo() {
-    var video = document.querySelector("video");
-    video.style.filter = "invert(1)";
+    const elements = document.querySelectorAll("video, iframe");
+    for (let i = 0; i < elements.length; i++) {
+        const element = elements[i];
+        element.style.filter = "invert(1)";
+    }
 }
+
 function invertImages() {
     var images = document.getElementsByTagName("img");
     for (let i = 0; i < images.length; i++) {
@@ -72,8 +76,11 @@ function invertImages() {
     }
 }
 function resetVideo() {
-        var video = document.querySelector("video");
-        video.style.filter = "none";
+    const elements = document.querySelectorAll("video, iframe");
+    for (let i = 0; i < elements.length; i++) {
+        const element = elements[i];
+        element.style.filter = "none";
+    }
 }
 function resetImages() {
     var images = document.getElementsByTagName("img");
