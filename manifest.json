@@ -1,6 +1,6 @@
 {
     "name": "Videos/Images Dark Mode",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "description": "Inverts videos and images. Suitable for learning materials that contain text that cannot be converted by other extensions.",
     "manifest_version": 3,
     "permissions": [
