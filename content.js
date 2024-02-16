@@ -2,64 +2,68 @@ chrome.runtime.onMessage.addListener(
     function (request) {
         if (request.videosDarkMode) {
             invertVideo();
+            observeVideos();
         }
         if (request.videosDarkMode === false) {
             resetVideo();
+            if (videosObserver) {
+                videosObserver.disconnect();
+            }
         }
         if (request.imagesDarkMode) {
             invertImages();
+            observeImages();
         }
         if (request.imagesDarkMode === false) {
             resetImages();
-        }
-        if(request.enabled) {
-            handleVideo();
-            handleImages();
-        }
-        if(request.enabled === false) {
-            resetImages();
-            resetVideo();
+            if (imagesObserver) {
+                imagesObserver.disconnect();
+            }
         }
     }
 );
 
-chrome.storage.sync.get('enabled', function (data) {
-    if(data.enabled) {
-        observeChanges();
+var videosObserver;
+var imagesObserver;
+
+chrome.storage.sync.get('videosCheckbox', function (data) {
+    if (data.videosCheckbox) {
+        observeVideos();
     }
 });
 
-function observeChanges() {
-    const mutationObserver = new MutationObserver((() => {
+chrome.storage.sync.get('imagesCheckbox', function (data) {
+    if (data.videosCheckbox) {
+        observeImages();
+    }
+});
+
+function observeVideos() {
+    videosObserver = new MutationObserver((() => {
         if (document.querySelector("video, iframe")) {
-            handleVideo();
-        }
-        if (document.querySelector("img")) {
-            handleImages();
+            invertVideo();
         }
     }));
-    
+
+    videosObserver.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
+}
+
+function observeImages() {
+    videoObserver = new MutationObserver((() => {
+        if (document.querySelector("img")) {
+            invertImages();
+        }
+    }));
+
     mutationObserver.observe(document.body, {
         childList: true,
         subtree: true
     });
 }
 
-function handleVideo() {
-    chrome.storage.sync.get('videosCheckbox', function (data) {
-        if (data.videosCheckbox) {
-            invertVideo();
-        }
-    });
-}
-
-function handleImages() {
-    chrome.storage.sync.get('imagesCheckbox', function (data) {
-        if (data.imagesCheckbox) {
-            invertImages();
-        }
-    });
-}
 function invertVideo() {
     const elements = document.querySelectorAll("video, iframe");
     for (let i = 0; i < elements.length; i++) {

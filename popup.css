@@ -1,27 +1,41 @@
 body {
-    width: 130px;
-    margin: 0;
-    padding: 10px;
-    background-color: black;
-    color: bisque;
-}
-
-#videosCheckbox,
-#imagesCheckbox,
-#enableCheckbox {
-    accent-color: bisque;
+  width: 160px;
+  margin: 0;
+  padding: 10px;
+  background-color: rgb(29, 29, 29);
+  color: bisque;
 }
 
 button {
-    background-color: #333; 
-    color: bisque; 
-    padding: 5px 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-bottom: 5px;
-  }
+  background-color: #333;
+  font-size: 15px;
+  color: bisque;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 5px;
+}
 
-  button:hover {
-    background-color: #555; 
-  }
+button:hover {
+  background-color: #555;
+}
+
+input[type="checkbox"] {
+  width: 15px;
+  height: 15px;
+  accent-color: bisque;
+}
+
+.checkbox-container {
+  cursor: pointer;
+  user-select: none;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+hr {
+  border-color: bisque;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
